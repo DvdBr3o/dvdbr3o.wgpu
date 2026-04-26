@@ -1,0 +1,502 @@
+{
+    "parameters": [
+        {
+            "name": "global",
+            "binding": {"kind": "subElementRegisterSpace", "index": 0},
+            "type": {
+                "kind": "parameterBlock",
+                "elementType": {
+                    "kind": "struct",
+                    "name": "Global",
+                    "fields": [
+                        {
+                            "name": "time",
+                            "type": {
+                                "kind": "scalar",
+                                "scalarType": "float32"
+                            },
+                            "binding": {"kind": "uniform", "offset": 0, "size": 4}
+                        },
+                        {
+                            "name": "delta_time",
+                            "type": {
+                                "kind": "scalar",
+                                "scalarType": "float32"
+                            },
+                            "binding": {"kind": "uniform", "offset": 4, "size": 4}
+                        },
+                        {
+                            "name": "frame",
+                            "type": {
+                                "kind": "scalar",
+                                "scalarType": "float32"
+                            },
+                            "binding": {"kind": "uniform", "offset": 8, "size": 4}
+                        },
+                        {
+                            "name": "viewport",
+                            "type": {
+                                "kind": "struct",
+                                "name": "Viewport",
+                                "fields": [
+                                    {
+                                        "name": "width",
+                                        "type": {
+                                            "kind": "scalar",
+                                            "scalarType": "int32"
+                                        },
+                                        "binding": {"kind": "uniform", "offset": 0, "size": 4}
+                                    },
+                                    {
+                                        "name": "height",
+                                        "type": {
+                                            "kind": "scalar",
+                                            "scalarType": "int32"
+                                        },
+                                        "binding": {"kind": "uniform", "offset": 4, "size": 4}
+                                    }
+                                ]
+                            },
+                            "binding": {"kind": "uniform", "offset": 16, "size": 16}
+                        }
+                    ]
+                },
+                "containerVarLayout": {
+                    "bindings": [
+                        {"kind": "descriptorTableSlot", "index": 0},
+                        {"kind": "subElementRegisterSpace", "index": 0}
+                    ]
+                },
+                "elementVarLayout": {
+                    "type": {
+                        "kind": "struct",
+                        "name": "Global",
+                        "fields": [
+                            {
+                                "name": "time",
+                                "type": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                },
+                                "binding": {"kind": "uniform", "offset": 0, "size": 4}
+                            },
+                            {
+                                "name": "delta_time",
+                                "type": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                },
+                                "binding": {"kind": "uniform", "offset": 4, "size": 4}
+                            },
+                            {
+                                "name": "frame",
+                                "type": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                },
+                                "binding": {"kind": "uniform", "offset": 8, "size": 4}
+                            },
+                            {
+                                "name": "viewport",
+                                "type": {
+                                    "kind": "struct",
+                                    "name": "Viewport",
+                                    "fields": [
+                                        {
+                                            "name": "width",
+                                            "type": {
+                                                "kind": "scalar",
+                                                "scalarType": "int32"
+                                            },
+                                            "binding": {"kind": "uniform", "offset": 0, "size": 4}
+                                        },
+                                        {
+                                            "name": "height",
+                                            "type": {
+                                                "kind": "scalar",
+                                                "scalarType": "int32"
+                                            },
+                                            "binding": {"kind": "uniform", "offset": 4, "size": 4}
+                                        }
+                                    ]
+                                },
+                                "binding": {"kind": "uniform", "offset": 16, "size": 16}
+                            }
+                        ]
+                    },
+                    "binding": {"kind": "uniform", "offset": 0, "size": 32}
+                }
+            }
+        },
+        {
+            "name": "camera",
+            "binding": {"kind": "subElementRegisterSpace", "index": 1},
+            "type": {
+                "kind": "parameterBlock",
+                "elementType": {
+                    "kind": "struct",
+                    "name": "Camera",
+                    "fields": [
+                        {
+                            "name": "view_matrix",
+                            "type": {
+                                "kind": "matrix",
+                                "rowCount": 4,
+                                "columnCount": 4,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "binding": {"kind": "uniform", "offset": 0, "size": 64}
+                        },
+                        {
+                            "name": "projection_matrix",
+                            "type": {
+                                "kind": "matrix",
+                                "rowCount": 4,
+                                "columnCount": 4,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "binding": {"kind": "uniform", "offset": 64, "size": 64}
+                        }
+                    ]
+                },
+                "containerVarLayout": {
+                    "bindings": [
+                        {"kind": "descriptorTableSlot", "index": 0},
+                        {"kind": "subElementRegisterSpace", "index": 0}
+                    ]
+                },
+                "elementVarLayout": {
+                    "type": {
+                        "kind": "struct",
+                        "name": "Camera",
+                        "fields": [
+                            {
+                                "name": "view_matrix",
+                                "type": {
+                                    "kind": "matrix",
+                                    "rowCount": 4,
+                                    "columnCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "binding": {"kind": "uniform", "offset": 0, "size": 64}
+                            },
+                            {
+                                "name": "projection_matrix",
+                                "type": {
+                                    "kind": "matrix",
+                                    "rowCount": 4,
+                                    "columnCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "binding": {"kind": "uniform", "offset": 64, "size": 64}
+                            }
+                        ]
+                    },
+                    "binding": {"kind": "uniform", "offset": 0, "size": 128}
+                }
+            }
+        },
+        {
+            "name": "pbr",
+            "binding": {"kind": "subElementRegisterSpace", "index": 2},
+            "type": {
+                "kind": "parameterBlock",
+                "elementType": {
+                    "kind": "struct",
+                    "name": "PbrMaterial",
+                    "fields": [
+                        {
+                            "name": "tex_albedo",
+                            "type": {
+                                "kind": "resource",
+                                "baseShape": "texture2D",
+                                "resultType": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                }
+                            },
+                            "binding": {"kind": "descriptorTableSlot", "index": 0}
+                        },
+                        {
+                            "name": "smp_albedo",
+                            "type": {
+                                "kind": "samplerState"
+                            },
+                            "binding": {"kind": "descriptorTableSlot", "index": 1}
+                        }
+                    ]
+                },
+                "containerVarLayout": {
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                "elementVarLayout": {
+                    "type": {
+                        "kind": "struct",
+                        "name": "PbrMaterial",
+                        "fields": [
+                            {
+                                "name": "tex_albedo",
+                                "type": {
+                                    "kind": "resource",
+                                    "baseShape": "texture2D",
+                                    "resultType": {
+                                        "kind": "vector",
+                                        "elementCount": 4,
+                                        "elementType": {
+                                            "kind": "scalar",
+                                            "scalarType": "float32"
+                                        }
+                                    }
+                                },
+                                "binding": {"kind": "descriptorTableSlot", "index": 0}
+                            },
+                            {
+                                "name": "smp_albedo",
+                                "type": {
+                                    "kind": "samplerState"
+                                },
+                                "binding": {"kind": "descriptorTableSlot", "index": 1}
+                            }
+                        ]
+                    },
+                    "binding": {"kind": "descriptorTableSlot", "index": 0, "count": 2}
+                }
+            }
+        }
+    ],
+    "entryPoints": [
+        {
+            "name": "vertMain",
+            "stage": "vertex",
+            "parameters": [
+                {
+                    "name": "vid",
+                    "semanticName": "SV_VERTEXID",
+                    "type": {
+                        "kind": "scalar",
+                        "scalarType": "uint32"
+                    }
+                },
+                {
+                    "name": "input",
+                    "stage": "vertex",
+                    "binding": {"kind": "varyingInput", "index": 0, "count": 4},
+                    "type": {
+                        "kind": "struct",
+                        "name": "VertexInput",
+                        "fields": [
+                            {
+                                "name": "pos",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 3,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "stage": "vertex",
+                                "binding": {"kind": "varyingInput", "index": 0}
+                            },
+                            {
+                                "name": "normal",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 3,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "stage": "vertex",
+                                "binding": {"kind": "varyingInput", "index": 1}
+                            },
+                            {
+                                "name": "uv",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 2,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "stage": "vertex",
+                                "binding": {"kind": "varyingInput", "index": 2}
+                            },
+                            {
+                                "name": "tex_id",
+                                "type": {
+                                    "kind": "scalar",
+                                    "scalarType": "uint32"
+                                },
+                                "stage": "vertex",
+                                "binding": {"kind": "varyingInput", "index": 3}
+                            }
+                        ]
+                    }
+                }
+            ],
+            "result": {
+                "stage": "vertex",
+                "binding": {"kind": "varyingOutput", "index": 0, "count": 2},
+                "type": {
+                    "kind": "struct",
+                    "name": "VertexOutput",
+                    "fields": [
+                        {
+                            "name": "sv_position",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 4,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "semanticName": "SV_POSITION"
+                        },
+                        {
+                            "name": "color",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 3,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "stage": "vertex",
+                            "binding": {"kind": "varyingOutput", "index": 0}
+                        },
+                        {
+                            "name": "uv",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 2,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "stage": "vertex",
+                            "binding": {"kind": "varyingOutput", "index": 1}
+                        }
+                    ]
+                }
+            },
+            "bindings": [
+                {
+                    "name": "global",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                {
+                    "name": "camera",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 1}
+                },
+                {
+                    "name": "pbr",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 2}
+                }
+            ]
+        },
+        {
+            "name": "fragMain",
+            "stage": "fragment",
+            "parameters": [
+                {
+                    "name": "in_vert",
+                    "stage": "fragment",
+                    "binding": {"kind": "varyingInput", "index": 0, "count": 2},
+                    "type": {
+                        "kind": "struct",
+                        "name": "VertexOutput",
+                        "fields": [
+                            {
+                                "name": "sv_position",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "semanticName": "SV_POSITION"
+                            },
+                            {
+                                "name": "color",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 3,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "stage": "fragment",
+                                "binding": {"kind": "varyingInput", "index": 0}
+                            },
+                            {
+                                "name": "uv",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 2,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "stage": "fragment",
+                                "binding": {"kind": "varyingInput", "index": 1}
+                            }
+                        ]
+                    }
+                }
+            ],
+            "result": {
+                "stage": "fragment",
+                "binding": {"kind": "varyingOutput", "index": 0},
+                "semanticName": "SV_TARGET",
+                "type": {
+                    "kind": "vector",
+                    "elementCount": 4,
+                    "elementType": {
+                        "kind": "scalar",
+                        "scalarType": "float32"
+                    }
+                }
+            },
+            "bindings": [
+                {
+                    "name": "global",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                {
+                    "name": "camera",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 1}
+                },
+                {
+                    "name": "pbr",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 2}
+                }
+            ]
+        }
+    ]
+}

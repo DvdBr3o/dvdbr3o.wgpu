@@ -1,0 +1,24 @@
+diff --git a/cmake/import_standalone_asio.cmake b/cmake/import_standalone_asio.cmake
+index 0940998..42db1da 100644
+--- a/cmake/import_standalone_asio.cmake
++++ b/cmake/import_standalone_asio.cmake
+@@ -21,13 +21,17 @@ function(import_standalone_asio)
+     # 2) WIN32_LEAN_AND_MEAN is defined to make Winsock2 work.
+     if(asio_ADDED)
+       add_library(asio INTERFACE)
+-
+-      target_include_directories(asio SYSTEM INTERFACE ${asio_SOURCE_DIR}/asio/include)
++      target_include_directories(asio SYSTEM INTERFACE
++        $<BUILD_INTERFACE:${asio_SOURCE_DIR}/asio/include>
++        $<INSTALL_INTERFACE:include>
++      )
+ 
+       target_compile_definitions(asio INTERFACE ASIO_STANDALONE ASIO_NO_DEPRECATED)
+ 
+       target_link_libraries(asio INTERFACE Threads::Threads)
+ 
++      install(TARGETS asio EXPORT stdexec-exports)
++
+       if(WIN32)
+         # macro see @ https://stackoverflow.com/a/40217291/1746503
+         macro(get_win32_winnt version)
