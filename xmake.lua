@@ -97,6 +97,7 @@ target("dvdbr3o.wgpu")
         add_defines("DVDBR3O_WGPU_PLAT_IOS")
     elseif is_plat("wasm") then 
         add_defines("DVDBR3O_WGPU_PLAT_WASM")
+        add_defines("WEBGPU_BACKEND_WASM")
     end
 
     if is_mode("debug") then
@@ -107,8 +108,3 @@ target("dvdbr3o.wgpu")
         add_defines("DVDBR3O_WGPU_MODE_PROFILE")
     end
 
-    -- after_build(function (target) 
-    --     os.cp("public/**", path.join(target:targetdir()))
-    -- end)
-
-    -- add_installfiles("public/**")

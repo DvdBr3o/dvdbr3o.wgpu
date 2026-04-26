@@ -32,7 +32,7 @@ struct MeshPrimitive {
 
 	//
 	void render(wgpu::RenderPassEncoder& pass) const {
-		pass.SetBindGroup(1, bg_pbr);
+		pass.SetBindGroup(2, bg_pbr);
 		pass.SetVertexBuffer(0, buf_vertex);
 		pass.SetIndexBuffer(buf_index, buf_index_format);
 		pass.DrawIndexed(buf_index_count);
@@ -61,8 +61,20 @@ struct GltfParseError : UnlikelyExcption {
 	using UnlikelyExcption::UnlikelyExcption;
 };
 
+inline auto model_from(
+	std::span<std::byte> gltf, const wgpu::BindGroupLayout& pbr_layout,
+	const Context& ctx = Context::global()
+) -> std::vector<Mesh>;
+
 inline auto model_from(std::span<std::byte> gltf, const Context& ctx = Context::global())
 	-> std::vector<Mesh> {
+	const auto pbr_layout = bindgroup_layout_from_string(ctx, "pbr", Shaders::mtoon.layout_json);
+	return model_from(gltf, pbr_layout, ctx);
+}
+
+inline auto model_from(
+	std::span<std::byte> gltf, const wgpu::BindGroupLayout& pbr_layout, const Context& ctx
+) -> std::vector<Mesh> {
 	std::vector<Mesh> meshes;
 
 	auto asset = ModelLoader::global().loadGltf(fastgltf::GltfDataBuffer::FromSpan(gltf).get(), "");
@@ -103,7 +115,7 @@ inline auto model_from(std::span<std::byte> gltf, const Context& ctx = Context::
 			{	// pbr bg
 				// clang-format off
 				out_primitive.bg_pbr = bindgroup_from(  
-					bindgroup_layout_from_string("pbr", Shaders::mtoon.layout_json),
+					pbr_layout,
 					std::array { 
 						wgpu::BindGroupEntry {
 							.binding = 0,
@@ -189,6 +201,8 @@ inline auto model_from(std::span<std::byte> gltf, const Context& ctx = Context::
 					throw GltfParseError("wtf this gltf has no indice accessor?");
 				}
 			}
+
+			out_mesh.primitives.emplace_back(std::move(out_primitive));
 		}
 		meshes.emplace_back(std::move(out_mesh));
 	}

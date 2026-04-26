@@ -1,5 +1,6 @@
 #pragma once
 
+#include "dvdbr3o/Render/Bindgroup.hpp"
 #include "dvdbr3o/Render/Context.hpp"
 
 #include <glm/ext/matrix_clip_space.hpp>
@@ -10,8 +11,22 @@
 #include <webgpu/webgpu_cpp.h>
 
 #include <algorithm>
+#include <array>
+#include <cstdint>
 
 namespace dvdbr3o::Render {
+
+struct Viewport {
+	int32_t width  = 0;
+	int32_t height = 0;
+};
+
+struct Global {
+	float	 time	   = 0.0f;
+	float	 delta_time = 0.0f;
+	float	 frame	   = 0.0f;
+	Viewport viewport {};
+};
 
 struct Camera {
 	inline static constexpr float	  mouse_turn_speed	= glm::pi<float>();
@@ -28,7 +43,7 @@ struct Camera {
 	float							  z_far	 = 1000.0f;
 
 	[[nodiscard]] auto				  forward() const -> glm::vec3 {
-		   return glm::normalize(rotation * local_forward);
+		return glm::normalize(rotation * local_forward);
 	}
 
 	[[nodiscard]] auto right() const -> glm::vec3 { return glm::normalize(rotation * local_right); }
@@ -48,7 +63,7 @@ struct Camera {
 	}
 
 	auto rotate(float delta_yaw, float delta_pitch) -> void {
-		rotation				   = glm::normalize(glm::angleAxis(delta_yaw, world_up) * rotation);
+		rotation = glm::normalize(glm::angleAxis(delta_yaw, world_up) * rotation);
 
 		const auto current_forward = forward();
 		const auto current_pitch   = std::asin(std::clamp(current_forward.y, -1.0f, 1.0f));
@@ -67,7 +82,63 @@ struct Camera {
 	}
 };
 
-struct CameraBindgroup {
+struct GlobalHandle {
+	struct Data {
+		float	time;
+		float	delta_time;
+		float	frame;
+		float	_padding0;
+		int32_t viewport_width;
+		int32_t viewport_height;
+		int32_t _padding1;
+		int32_t _padding2;
+	};
+
+	wgpu::Buffer	buffer;
+	wgpu::BindGroup bindgroup;
+
+	inline static auto from(
+		const wgpu::BindGroupLayout& layout, const Context& ctx = Context::global()
+	) -> GlobalHandle {
+		GlobalHandle out;
+		const wgpu::BufferDescriptor buf_desc {
+			.usage			  = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst,
+			.size			  = sizeof(Data),
+			.mappedAtCreation = false,
+		};
+		out.buffer	  = ctx.device.CreateBuffer(&buf_desc);
+		out.bindgroup = bindgroup_from(
+			ctx,
+			layout,
+			std::to_array<wgpu::BindGroupEntry>({
+				{
+					.binding = 0,
+					.buffer	 = out.buffer,
+					.size	 = sizeof(Data),
+				},
+			})
+		);
+		return out;
+	}
+
+	auto update(const Context& ctx, const Global& global) const -> void {
+		const Data data {
+			.time			 = global.time,
+			.delta_time		 = global.delta_time,
+			.frame			 = global.frame,
+			._padding0		 = 0.0f,
+			.viewport_width	 = global.viewport.width,
+			.viewport_height = global.viewport.height,
+			._padding1		 = 0,
+			._padding2		 = 0,
+		};
+		ctx.queue.WriteBuffer(buffer, 0, &data, sizeof(Data));
+	}
+
+	auto update(const Global& global) const -> void { update(Context::global(), global); }
+};
+
+struct CameraHandle {
 	struct Data {
 		glm::mat4 view;
 		glm::mat4 proj;
@@ -76,13 +147,28 @@ struct CameraBindgroup {
 	wgpu::Buffer	buffer;
 	wgpu::BindGroup bindgroup;
 
-	CameraBindgroup(const Context& ctx = Context::global()) {
+	inline static auto from(
+		const wgpu::BindGroupLayout& layout, const Context& ctx = Context::global()
+	) -> CameraHandle {
+		CameraHandle out;
 		const wgpu::BufferDescriptor buf_desc {
 			.usage			  = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst,
 			.size			  = sizeof(Data),
 			.mappedAtCreation = false,
 		};
-		buffer = ctx.device.CreateBuffer(&buf_desc);
+		out.buffer	  = ctx.device.CreateBuffer(&buf_desc);
+		out.bindgroup = bindgroup_from(
+			ctx,
+			layout,
+			std::to_array<wgpu::BindGroupEntry>({
+				{
+					.binding = 0,
+					.buffer	 = out.buffer,
+					.size	 = sizeof(Data),
+				},
+			})
+		);
+		return out;
 	}
 
 	auto update(const Context& ctx, const Camera& camera) const -> void {
