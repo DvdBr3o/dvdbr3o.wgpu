@@ -86,4 +86,8 @@ public:
 		return context;
 	}
 };
+
+inline auto& global_context() {
+	return Context::global();
+}
 }  // namespace dvdbr3o::Render

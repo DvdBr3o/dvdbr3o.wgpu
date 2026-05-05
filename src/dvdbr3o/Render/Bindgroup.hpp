@@ -59,6 +59,13 @@ inline auto texture_format_from(std::string_view format) -> wgpu::TextureFormat 
 	[[unlikely]] { throw LayoutJsonParseError("unknown texture format `{}`!", format); }
 }
 
+inline auto texture_format_from(const nlohmann::json& binding) -> wgpu::TextureFormat {
+	const auto format_it = binding.find("format");
+	if (format_it == binding.end() || !format_it->is_string())
+		return wgpu::TextureFormat::RGBA8Unorm;
+	return texture_format_from(format_it->get<std::string_view>());
+}
+
 inline auto bindgroup_layout_from_parameter(const Context& ctx, const nlohmann::json& param)
 	-> wgpu::BindGroupLayout {
 	//
@@ -104,7 +111,7 @@ inline auto bindgroup_layout_from_parameter(const Context& ctx, const nlohmann::
 				.visibility = wgpu::ShaderStage::Fragment | wgpu::ShaderStage::Compute,
 				.storageTexture = {
 					.access = access,
-					.format = texture_format_from(binding["format"]),
+					.format = texture_format_from(binding),
 					.viewDimension = view_dimension_from(binding["viewDimension"]),
 				},
 			});

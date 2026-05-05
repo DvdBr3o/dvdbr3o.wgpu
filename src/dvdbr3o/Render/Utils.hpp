@@ -146,7 +146,7 @@ inline auto texture_from_image(
 					ctx,
 					Render::ImageInfo {
 									{ reinterpret_cast<char*>(data),
-									  std::strlen(reinterpret_cast<char*>(data)) },
+									  static_cast<size_t>(width * height * 4) },
 						static_cast<uint32_t>(width),
 						static_cast<uint32_t>(height),
 				}
@@ -168,7 +168,7 @@ inline auto texture_from_image(
 					ctx,
 					Render::ImageInfo {
 						{ reinterpret_cast<char*>(data),
-						  std::strlen(reinterpret_cast<char*>(data)) },
+						  static_cast<size_t>(width * height * 4) },
 						static_cast<uint32_t>(width),
 						static_cast<uint32_t>(height),
 				}

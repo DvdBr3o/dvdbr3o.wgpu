@@ -47,4 +47,14 @@ template<typename T>
 inline auto array_index_buffer(std::span<const T> data) -> wgpu::Buffer {
 	return array_index_buffer<T>(Context::global(), data);
 }
+
+template<wgpu::BufferUsage usage>
+inline auto create_buffer(size_t size, const Context& ctx = Context::global()) -> wgpu::Buffer {
+	const wgpu::BufferDescriptor desc = {
+		.usage			  = usage,
+		.size			  = size,
+		.mappedAtCreation = false,
+	};
+	return ctx.device.CreateBuffer(&desc);
+}
 }  // namespace dvdbr3o::Render

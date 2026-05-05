@@ -29,6 +29,7 @@ add_requires("stdexec", {
 add_requires("unordered_dense")
 add_requires("stb")
 add_requires("tl_expected")
+add_requires("freetype")
 
 target("dvdbr3o.shaders.lib")
     set_kind("static")
@@ -43,6 +44,8 @@ target("dvdbr3o.shaders")
     add_rules("slang", {target_kind = "wgsl"})
     add_deps("dvdbr3o.shaders.lib")
     add_files("src/dvdbr3o/Shaders/Ascii.slang")
+    add_files("src/dvdbr3o/Shaders/AsciiCompute.slang")
+    add_files("src/dvdbr3o/Shaders/AsciiComposite.slang")
     add_files("src/dvdbr3o/Shaders/Mtoon.slang")
 
 target("dvdbr3o.wgpu")
@@ -57,6 +60,7 @@ target("dvdbr3o.wgpu")
             ".png", 
             ".jpg", 
             ".gltf",
+            ".vrm",
         },
         symbol_prefix = "dvdbr3o_embed_",
         -- zeroend = true,
@@ -75,11 +79,16 @@ target("dvdbr3o.wgpu")
     add_packages("unordered_dense", {public = true})
     add_packages("stb", {public = true})
     add_packages("tl_expected", {public = true})
+    add_packages("freetype", {public = true})
     add_deps("dvdbr3o.shaders")
 
-    add_files("assets/**")
+    add_files("assets/**.vrm")
+    add_files("assets/**.gltf")
+    add_files("assets/**.png")
+    add_files("assets/**.jpg")
     add_files("src/dvdbr3o/Shaders/**.wgsl")
     add_files("src/dvdbr3o/Shaders/**.json")
+    add_files("src/dvdbr3o/Shaders/**.slang")
     add_files("src/**.cpp", {public = true})
     add_headerfiles("src/**.hpp", {public = true})
     add_includedirs("src", {public = true})
@@ -106,5 +115,15 @@ target("dvdbr3o.wgpu")
         add_defines("DVDBR3O_WGPU_MODE_RELEASE")
     elseif is_mode("profile") then
         add_defines("DVDBR3O_WGPU_MODE_PROFILE")
+    end
+
+    after_build(function (target)
+        if target:is_plat("windows") then
+            os.cp("vendors/runtime/windows/**.dll", target:targetdir())
+        end
+    end)
+
+    if is_plat("windows") then
+        add_installfiles("vendors/runtime/windows/**.dll")
     end
 

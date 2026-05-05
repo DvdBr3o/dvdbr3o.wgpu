@@ -44,9 +44,10 @@ public:
 
 public:
 	Window(const Spec& spec) :
-		_window(
-			SDL_CreateWindow(spec.title.data(), spec.width, spec.height, SDL_WINDOW_RESIZABLE)
-		) {
+		_window(SDL_CreateWindow(
+			spec.title.data(), spec.width, spec.height,
+			SDL_WINDOW_RESIZABLE | SDL_WINDOW_TRANSPARENT
+		)) {
 		SDL_ShowWindow(_window);
 		_surface = Render::create_sdl3_surface(_window);
 		_configure_surface();

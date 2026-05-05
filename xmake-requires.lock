@@ -427,6 +427,14 @@
             },
             version = "v0.9.0"
         },
+        ["freetype#f56260b5"] = {
+            repo = {
+                branch = "master",
+                commit = "8070aa1905c979eef8b35d7e346ba56c476a3d0c",
+                url = "https://gitee.com/tboox/xmake-repo.git"
+            },
+            version = "2.14.1"
+        },
         ["glm#f56260b5"] = {
             repo = {
                 branch = "master",
@@ -442,6 +450,14 @@
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "3.4.0"
+        },
+        ["meson#f56260b5"] = {
+            repo = {
+                branch = "master",
+                commit = "8070aa1905c979eef8b35d7e346ba56c476a3d0c",
+                url = "https://gitee.com/tboox/xmake-repo.git"
+            },
+            version = "1.10.1"
         },
         ["miniz#f56260b5"] = {
             repo = {
@@ -474,6 +490,22 @@
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "2024.01.04"
+        },
+        ["pkgconf#f56260b5"] = {
+            repo = {
+                branch = "master",
+                commit = "8070aa1905c979eef8b35d7e346ba56c476a3d0c",
+                url = "https://gitee.com/tboox/xmake-repo.git"
+            },
+            version = "2.5.1"
+        },
+        ["python 3.x#f56260b5"] = {
+            repo = {
+                branch = "master",
+                commit = "8070aa1905c979eef8b35d7e346ba56c476a3d0c",
+                url = "https://gitee.com/tboox/xmake-repo.git"
+            },
+            version = "3.13.11"
         },
         ["simdjson#f56260b5"] = {
             repo = {
@@ -525,6 +557,14 @@
                 url = "https://gitee.com/tboox/xmake-repo.git"
             },
             version = "v4.8.1"
+        },
+        ["zlib#f56260b5"] = {
+            repo = {
+                branch = "master",
+                commit = "8070aa1905c979eef8b35d7e346ba56c476a3d0c",
+                url = "https://gitee.com/tboox/xmake-repo.git"
+            },
+            version = "v1.3.2"
         }
     }
 }

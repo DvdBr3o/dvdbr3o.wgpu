@@ -9,7 +9,12 @@ public struct Global {
 	public float time;
 	public float delta_time;
 	public float	frame;
+	public float	_padding0;
 	public Viewport viewport;
+	public int32_t	_padding1;
+	public int32_t	_padding2;
+	public float4 point_light_position_intensity;
+	public float4 point_light_color_ambient;
 }
 
 public struct Camera {

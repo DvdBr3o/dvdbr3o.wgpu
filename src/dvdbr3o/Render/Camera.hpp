@@ -22,14 +22,20 @@ struct Viewport {
 };
 
 struct Global {
-	float	 time	   = 0.0f;
+	float	 time		= 0.0f;
 	float	 delta_time = 0.0f;
-	float	 frame	   = 0.0f;
+	float	 frame		= 0.0f;
 	Viewport viewport {};
+	glm::vec3 point_light_position { 1.2f, 1.8f, 1.8f };
+	float	  point_light_intensity = 1.6f;
+	glm::vec3 point_light_color { 1.0f, 0.95f, 0.9f };
+	float	  ambient_strength = 0.52f;
 };
 
 struct Camera {
 	inline static constexpr float	  mouse_turn_speed	= glm::pi<float>();
+	inline static constexpr float	  mouse_pan_speed	= 2.0f;
+	inline static constexpr float	  mouse_dolly_speed = 0.5f;
 	inline static constexpr float	  max_pitch_radians = glm::radians(89.0f);
 	inline static constexpr glm::vec3 world_up { 0.0f, 1.0f, 0.0f };
 	inline static constexpr glm::vec3 local_right { 1.0f, 0.0f, 0.0f };
@@ -42,7 +48,8 @@ struct Camera {
 	float							  z_near = 0.1f;
 	float							  z_far	 = 1000.0f;
 
-	[[nodiscard]] auto				  forward() const -> glm::vec3 {
+	//
+	[[nodiscard]] auto forward() const -> glm::vec3 {
 		return glm::normalize(rotation * local_forward);
 	}
 
@@ -63,7 +70,7 @@ struct Camera {
 	}
 
 	auto rotate(float delta_yaw, float delta_pitch) -> void {
-		rotation = glm::normalize(glm::angleAxis(delta_yaw, world_up) * rotation);
+		rotation				   = glm::normalize(glm::angleAxis(delta_yaw, world_up) * rotation);
 
 		const auto current_forward = forward();
 		const auto current_pitch   = std::asin(std::clamp(current_forward.y, -1.0f, 1.0f));
@@ -78,7 +85,29 @@ struct Camera {
 		const auto scale_denominator = static_cast<float>(std::max(std::min(width, height), 1));
 		const auto normalized_dx	 = dx / scale_denominator;
 		const auto normalized_dy	 = dy / scale_denominator;
-		rotate(normalized_dx * mouse_turn_speed, -normalized_dy * mouse_turn_speed);
+		rotate(normalized_dx * mouse_turn_speed, normalized_dy * mouse_turn_speed);
+	}
+
+	auto pan(float delta_right, float delta_up) -> void {
+		pos += right() * delta_right + up() * delta_up;
+	}
+
+	auto pan_from_mouse(float dx, float dy, int width, int height) -> void {
+		const auto scale_denominator = static_cast<float>(std::max(std::min(width, height), 1));
+		const auto normalized_dx	 = dx / scale_denominator;
+		const auto normalized_dy	 = dy / scale_denominator;
+		const auto distance_scale	 = std::max(glm::length(pos), 0.1f);
+		pan(
+			-normalized_dx * mouse_pan_speed * distance_scale,
+			normalized_dy * mouse_pan_speed * distance_scale
+		);
+	}
+
+	auto dolly(float delta_forward) -> void { pos += forward() * delta_forward; }
+
+	auto dolly_from_wheel(float wheel_delta) -> void {
+		const auto distance_scale = std::max(glm::length(pos), 0.1f);
+		dolly(wheel_delta * mouse_dolly_speed * distance_scale);
 	}
 };
 
@@ -90,17 +119,23 @@ struct GlobalHandle {
 		float	_padding0;
 		int32_t viewport_width;
 		int32_t viewport_height;
+		int32_t viewport_padding0;
+		int32_t viewport_padding1;
 		int32_t _padding1;
 		int32_t _padding2;
+		int32_t _padding3;
+		int32_t _padding4;
+		glm::vec4 point_light_position_intensity;
+		glm::vec4 point_light_color_ambient;
 	};
 
-	wgpu::Buffer	buffer;
-	wgpu::BindGroup bindgroup;
+	wgpu::Buffer	   buffer;
+	wgpu::BindGroup	   bindgroup;
 
 	inline static auto from(
 		const wgpu::BindGroupLayout& layout, const Context& ctx = Context::global()
 	) -> GlobalHandle {
-		GlobalHandle out;
+		GlobalHandle				 out;
 		const wgpu::BufferDescriptor buf_desc {
 			.usage			  = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst,
 			.size			  = sizeof(Data),
@@ -115,8 +150,8 @@ struct GlobalHandle {
 					.binding = 0,
 					.buffer	 = out.buffer,
 					.size	 = sizeof(Data),
-				},
-			})
+				 },
+		})
 		);
 		return out;
 	}
@@ -126,11 +161,20 @@ struct GlobalHandle {
 			.time			 = global.time,
 			.delta_time		 = global.delta_time,
 			.frame			 = global.frame,
-			._padding0		 = 0.0f,
 			.viewport_width	 = global.viewport.width,
 			.viewport_height = global.viewport.height,
-			._padding1		 = 0,
-			._padding2		 = 0,
+			.point_light_position_intensity = {
+				global.point_light_position.x,
+				global.point_light_position.y,
+				global.point_light_position.z,
+				global.point_light_intensity,
+			},
+			.point_light_color_ambient = {
+				global.point_light_color.x,
+				global.point_light_color.y,
+				global.point_light_color.z,
+				global.ambient_strength,
+			},
 		};
 		ctx.queue.WriteBuffer(buffer, 0, &data, sizeof(Data));
 	}
@@ -144,13 +188,13 @@ struct CameraHandle {
 		glm::mat4 proj;
 	};
 
-	wgpu::Buffer	buffer;
-	wgpu::BindGroup bindgroup;
+	wgpu::Buffer	   buffer;
+	wgpu::BindGroup	   bindgroup;
 
 	inline static auto from(
 		const wgpu::BindGroupLayout& layout, const Context& ctx = Context::global()
 	) -> CameraHandle {
-		CameraHandle out;
+		CameraHandle				 out;
 		const wgpu::BufferDescriptor buf_desc {
 			.usage			  = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst,
 			.size			  = sizeof(Data),
@@ -165,8 +209,8 @@ struct CameraHandle {
 					.binding = 0,
 					.buffer	 = out.buffer,
 					.size	 = sizeof(Data),
-				},
-			})
+				 },
+		})
 		);
 		return out;
 	}

@@ -1,0 +1,354 @@
+{
+    "parameters": [
+        {
+            "name": "config",
+            "binding": {"kind": "subElementRegisterSpace", "index": 0},
+            "type": {
+                "kind": "parameterBlock",
+                "elementType": {
+                    "kind": "struct",
+                    "name": "AsciiConfig",
+                    "fields": [
+                        {
+                            "name": "metrics0",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 4,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "int32"
+                                }
+                            },
+                            "binding": {"kind": "uniform", "offset": 0, "size": 16}
+                        }
+                    ]
+                },
+                "containerVarLayout": {
+                    "bindings": [
+                        {"kind": "descriptorTableSlot", "index": 0},
+                        {"kind": "subElementRegisterSpace", "index": 0}
+                    ]
+                },
+                "elementVarLayout": {
+                    "type": {
+                        "kind": "struct",
+                        "name": "AsciiConfig",
+                        "fields": [
+                            {
+                                "name": "metrics0",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "int32"
+                                    }
+                                },
+                                "binding": {"kind": "uniform", "offset": 0, "size": 16}
+                            }
+                        ]
+                    },
+                    "binding": {"kind": "uniform", "offset": 0, "size": 16}
+                }
+            }
+        },
+        {
+            "name": "cell_data",
+            "binding": {"kind": "subElementRegisterSpace", "index": 1},
+            "type": {
+                "kind": "parameterBlock",
+                "elementType": {
+                    "kind": "struct",
+                    "name": "AsciiCells",
+                    "fields": [
+                        {
+                            "name": "cells",
+                            "type": {
+                                "kind": "resource",
+                                "baseShape": "structuredBuffer",
+                                "resultType": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                }
+                            },
+                            "binding": {"kind": "descriptorTableSlot", "index": 0}
+                        }
+                    ]
+                },
+                "containerVarLayout": {
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                "elementVarLayout": {
+                    "type": {
+                        "kind": "struct",
+                        "name": "AsciiCells",
+                        "fields": [
+                            {
+                                "name": "cells",
+                                "type": {
+                                    "kind": "resource",
+                                    "baseShape": "structuredBuffer",
+                                    "resultType": {
+                                        "kind": "vector",
+                                        "elementCount": 4,
+                                        "elementType": {
+                                            "kind": "scalar",
+                                            "scalarType": "float32"
+                                        }
+                                    }
+                                },
+                                "binding": {"kind": "descriptorTableSlot", "index": 0}
+                            }
+                        ]
+                    },
+                    "binding": {"kind": "descriptorTableSlot", "index": 0}
+                }
+            }
+        },
+        {
+            "name": "glyphs",
+            "binding": {"kind": "subElementRegisterSpace", "index": 2},
+            "type": {
+                "kind": "parameterBlock",
+                "elementType": {
+                    "kind": "struct",
+                    "name": "GlyphAtlas",
+                    "fields": [
+                        {
+                            "name": "atlas",
+                            "type": {
+                                "kind": "resource",
+                                "baseShape": "texture2D",
+                                "resultType": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                }
+                            },
+                            "binding": {"kind": "descriptorTableSlot", "index": 0}
+                        },
+                        {
+                            "name": "atlas_sampler",
+                            "type": {
+                                "kind": "samplerState"
+                            },
+                            "binding": {"kind": "descriptorTableSlot", "index": 1}
+                        }
+                    ]
+                },
+                "containerVarLayout": {
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                "elementVarLayout": {
+                    "type": {
+                        "kind": "struct",
+                        "name": "GlyphAtlas",
+                        "fields": [
+                            {
+                                "name": "atlas",
+                                "type": {
+                                    "kind": "resource",
+                                    "baseShape": "texture2D",
+                                    "resultType": {
+                                        "kind": "vector",
+                                        "elementCount": 4,
+                                        "elementType": {
+                                            "kind": "scalar",
+                                            "scalarType": "float32"
+                                        }
+                                    }
+                                },
+                                "binding": {"kind": "descriptorTableSlot", "index": 0}
+                            },
+                            {
+                                "name": "atlas_sampler",
+                                "type": {
+                                    "kind": "samplerState"
+                                },
+                                "binding": {"kind": "descriptorTableSlot", "index": 1}
+                            }
+                        ]
+                    },
+                    "binding": {"kind": "descriptorTableSlot", "index": 0, "count": 2}
+                }
+            }
+        },
+        {
+            "name": "depth_texture",
+            "binding": {"kind": "subElementRegisterSpace", "index": 3},
+            "type": {
+                "kind": "parameterBlock",
+                "elementType": {
+                    "kind": "struct",
+                    "name": "DepthTexture",
+                    "fields": [
+                        {
+                            "name": "depth_data",
+                            "type": {
+                                "kind": "resource",
+                                "baseShape": "texture2D",
+                                "resultType": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                }
+                            },
+                            "binding": {"kind": "descriptorTableSlot", "index": 0}
+                        }
+                    ]
+                },
+                "containerVarLayout": {
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                "elementVarLayout": {
+                    "type": {
+                        "kind": "struct",
+                        "name": "DepthTexture",
+                        "fields": [
+                            {
+                                "name": "depth_data",
+                                "type": {
+                                    "kind": "resource",
+                                    "baseShape": "texture2D",
+                                    "resultType": {
+                                        "kind": "vector",
+                                        "elementCount": 4,
+                                        "elementType": {
+                                            "kind": "scalar",
+                                            "scalarType": "float32"
+                                        }
+                                    }
+                                },
+                                "binding": {"kind": "descriptorTableSlot", "index": 0}
+                            }
+                        ]
+                    },
+                    "binding": {"kind": "descriptorTableSlot", "index": 0}
+                }
+            }
+        }
+    ],
+    "entryPoints": [
+        {
+            "name": "vertMain",
+            "stage": "vertex",
+            "parameters": [
+                {
+                    "name": "vid",
+                    "semanticName": "SV_VERTEXID",
+                    "type": {
+                        "kind": "scalar",
+                        "scalarType": "uint32"
+                    }
+                }
+            ],
+            "result": {
+                "semanticName": "SV_POSITION",
+                "type": {
+                    "kind": "vector",
+                    "elementCount": 4,
+                    "elementType": {
+                        "kind": "scalar",
+                        "scalarType": "float32"
+                    }
+                }
+            },
+            "bindings": [
+                {
+                    "name": "config",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                {
+                    "name": "cell_data",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 1}
+                },
+                {
+                    "name": "glyphs",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 2}
+                },
+                {
+                    "name": "depth_texture",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 3}
+                }
+            ]
+        },
+        {
+            "name": "fragMain",
+            "stage": "fragment",
+            "parameters": [
+                {
+                    "name": "sv_pos",
+                    "semanticName": "SV_POSITION",
+                    "type": {
+                        "kind": "vector",
+                        "elementCount": 4,
+                        "elementType": {
+                            "kind": "scalar",
+                            "scalarType": "float32"
+                        }
+                    }
+                }
+            ],
+            "result": {
+                "stage": "fragment",
+                "binding": {"kind": "varyingOutput", "index": 0},
+                "type": {
+                    "kind": "struct",
+                    "name": "FragmentOutput",
+                    "fields": [
+                        {
+                            "name": "color",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 4,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "stage": "fragment",
+                            "binding": {"kind": "varyingOutput", "index": 0},
+                            "semanticName": "SV_TARGET"
+                        },
+                        {
+                            "name": "depth",
+                            "type": {
+                                "kind": "scalar",
+                                "scalarType": "float32"
+                            },
+                            "semanticName": "SV_DEPTH"
+                        }
+                    ]
+                }
+            },
+            "bindings": [
+                {
+                    "name": "config",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 0}
+                },
+                {
+                    "name": "cell_data",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 1}
+                },
+                {
+                    "name": "glyphs",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 2}
+                },
+                {
+                    "name": "depth_texture",
+                    "binding": {"kind": "subElementRegisterSpace", "index": 3}
+                }
+            ]
+        }
+    ]
+}

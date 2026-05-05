@@ -34,6 +34,14 @@
                             "binding": {"kind": "uniform", "offset": 8, "size": 4}
                         },
                         {
+                            "name": "_padding0",
+                            "type": {
+                                "kind": "scalar",
+                                "scalarType": "float32"
+                            },
+                            "binding": {"kind": "uniform", "offset": 12, "size": 4}
+                        },
+                        {
                             "name": "viewport",
                             "type": {
                                 "kind": "struct",
@@ -58,6 +66,46 @@
                                 ]
                             },
                             "binding": {"kind": "uniform", "offset": 16, "size": 16}
+                        },
+                        {
+                            "name": "_padding1",
+                            "type": {
+                                "kind": "scalar",
+                                "scalarType": "int32"
+                            },
+                            "binding": {"kind": "uniform", "offset": 32, "size": 4}
+                        },
+                        {
+                            "name": "_padding2",
+                            "type": {
+                                "kind": "scalar",
+                                "scalarType": "int32"
+                            },
+                            "binding": {"kind": "uniform", "offset": 36, "size": 4}
+                        },
+                        {
+                            "name": "point_light_position_intensity",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 4,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "binding": {"kind": "uniform", "offset": 48, "size": 16}
+                        },
+                        {
+                            "name": "point_light_color_ambient",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 4,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "binding": {"kind": "uniform", "offset": 64, "size": 16}
                         }
                     ]
                 },
@@ -97,6 +145,14 @@
                                 "binding": {"kind": "uniform", "offset": 8, "size": 4}
                             },
                             {
+                                "name": "_padding0",
+                                "type": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                },
+                                "binding": {"kind": "uniform", "offset": 12, "size": 4}
+                            },
+                            {
                                 "name": "viewport",
                                 "type": {
                                     "kind": "struct",
@@ -121,10 +177,50 @@
                                     ]
                                 },
                                 "binding": {"kind": "uniform", "offset": 16, "size": 16}
+                            },
+                            {
+                                "name": "_padding1",
+                                "type": {
+                                    "kind": "scalar",
+                                    "scalarType": "int32"
+                                },
+                                "binding": {"kind": "uniform", "offset": 32, "size": 4}
+                            },
+                            {
+                                "name": "_padding2",
+                                "type": {
+                                    "kind": "scalar",
+                                    "scalarType": "int32"
+                                },
+                                "binding": {"kind": "uniform", "offset": 36, "size": 4}
+                            },
+                            {
+                                "name": "point_light_position_intensity",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "binding": {"kind": "uniform", "offset": 48, "size": 16}
+                            },
+                            {
+                                "name": "point_light_color_ambient",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 4,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "binding": {"kind": "uniform", "offset": 64, "size": 16}
                             }
                         ]
                     },
-                    "binding": {"kind": "uniform", "offset": 0, "size": 32}
+                    "binding": {"kind": "uniform", "offset": 0, "size": 80}
                 }
             }
         },
@@ -355,7 +451,7 @@
             ],
             "result": {
                 "stage": "vertex",
-                "binding": {"kind": "varyingOutput", "index": 0, "count": 2},
+                "binding": {"kind": "varyingOutput", "index": 0, "count": 4},
                 "type": {
                     "kind": "struct",
                     "name": "VertexOutput",
@@ -397,6 +493,32 @@
                             },
                             "stage": "vertex",
                             "binding": {"kind": "varyingOutput", "index": 1}
+                        },
+                        {
+                            "name": "normal",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 3,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "stage": "vertex",
+                            "binding": {"kind": "varyingOutput", "index": 2}
+                        },
+                        {
+                            "name": "world_pos",
+                            "type": {
+                                "kind": "vector",
+                                "elementCount": 3,
+                                "elementType": {
+                                    "kind": "scalar",
+                                    "scalarType": "float32"
+                                }
+                            },
+                            "stage": "vertex",
+                            "binding": {"kind": "varyingOutput", "index": 3}
                         }
                     ]
                 }
@@ -423,7 +545,7 @@
                 {
                     "name": "in_vert",
                     "stage": "fragment",
-                    "binding": {"kind": "varyingInput", "index": 0, "count": 2},
+                    "binding": {"kind": "varyingInput", "index": 0, "count": 4},
                     "type": {
                         "kind": "struct",
                         "name": "VertexOutput",
@@ -465,6 +587,32 @@
                                 },
                                 "stage": "fragment",
                                 "binding": {"kind": "varyingInput", "index": 1}
+                            },
+                            {
+                                "name": "normal",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 3,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "stage": "fragment",
+                                "binding": {"kind": "varyingInput", "index": 2}
+                            },
+                            {
+                                "name": "world_pos",
+                                "type": {
+                                    "kind": "vector",
+                                    "elementCount": 3,
+                                    "elementType": {
+                                        "kind": "scalar",
+                                        "scalarType": "float32"
+                                    }
+                                },
+                                "stage": "fragment",
+                                "binding": {"kind": "varyingInput", "index": 3}
                             }
                         ]
                     }
